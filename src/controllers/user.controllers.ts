@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import createUserService from "../services/users/createUser.service";
 import listUserService from "../services/users/listUser.service";
 import deleteUserService from "../services/users/deleteUser.service";
+import { AppError, handleError } from "../errors/appErrors";
 
 const createUserController = async (req: Request, res: Response) => {
   try {
@@ -9,12 +10,9 @@ const createUserController = async (req: Request, res: Response) => {
     const newUser = await createUserService({ adm, email, nome, password });
 
     return res.json(newUser);
-  } catch (err) {
-    if (err instanceof Error) {
-      return res.status(400).send({
-        name: err.name,
-        message: err.message,
-      });
+  } catch (error) {
+    if (error instanceof AppError) {
+      handleError(error, res);
     }
   }
 };
@@ -23,12 +21,9 @@ const listUserController = async (req: Request, res: Response) => {
   try {
     const users = await listUserService();
     return res.status(200).send(users);
-  } catch (err) {
-    if (err instanceof Error) {
-      return res.status(400).send({
-        name: err.name,
-        message: err.message,
-      });
+  } catch (error) {
+    if (error instanceof AppError) {
+      handleError(error, res);
     }
   }
 };
@@ -38,12 +33,9 @@ const deleteUserController = async (req: Request, res: Response) => {
     const { userId } = req.params;
     await deleteUserService(userId);
     return res.status(204).send();
-  } catch (err) {
-    if (err instanceof Error) {
-      return res.status(400).send({
-        name: err.name,
-        message: err.message,
-      });
+  } catch (error) {
+    if (error instanceof AppError) {
+      handleError(error, res);
     }
   }
 };

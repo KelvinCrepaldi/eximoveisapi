@@ -1,7 +1,8 @@
 import "reflect-metadata";
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import userRoutes from "./routes/user.routes";
 import sessionRoutes from "./routes/session.routes";
+import { AppError } from "./errors/appErrors";
 
 const app = express();
 const PORT = 3000;
@@ -9,6 +10,22 @@ const PORT = 3000;
 app.use(express.json());
 app.use("/users", userRoutes);
 app.use("/login", sessionRoutes);
+
+//global errors
+app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
+  if (err instanceof AppError) {
+    return res.status(err.statusCode).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+
+  return res.status(500).json({
+    status: "error",
+    message: "Internal server error",
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`App running on port: ${PORT}`);
 });

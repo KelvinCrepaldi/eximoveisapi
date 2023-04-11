@@ -4,6 +4,7 @@ import { IUserLogin } from "../../interfaces/users";
 import jwt from "jsonwebtoken";
 import * as bcryptjs from "bcryptjs";
 import "dotenv/config";
+import { AppError } from "../../errors/appErrors";
 
 const createSessionUserService = async ({
   email,
@@ -18,17 +19,17 @@ const createSessionUserService = async ({
   });
 
   if (!user) {
-    throw new Error("Invalid credentials");
+    throw new AppError(403, "Invalid credentials");
   }
 
   if (!user.ativo) {
-    throw new Error("User is not active");
+    throw new AppError(404, "User is not active");
   }
 
   const passwordMatch = await bcryptjs.compare(password, user.password);
 
   if (!passwordMatch) {
-    throw new Error("Invalid credentials");
+    throw new AppError(403, "Invalid credentials");
   }
 
   const token = jwt.sign(
