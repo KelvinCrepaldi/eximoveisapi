@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import createSessionUserService from "../services/sessions/createSessionUser.service";
+import { AppError, handleError } from "../errors/appErrors";
 
 const createUserSessionController = async (req: Request, res: Response) => {
   try {
@@ -12,10 +13,8 @@ const createUserSessionController = async (req: Request, res: Response) => {
 
     return res.status(200).json({ token });
   } catch (error) {
-    if (error instanceof Error) {
-      return res.status(400).json({
-        message: error.message,
-      });
+    if (error instanceof AppError) {
+      handleError(error, res);
     }
   }
 };

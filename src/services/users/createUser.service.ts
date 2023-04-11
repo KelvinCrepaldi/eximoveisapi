@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-
+import { AppError } from "../../errors/appErrors";
 import AppDataSource from "../../data-source";
 import { IUserRequest } from "../../interfaces/users";
 import { User } from "../../entities/user.entity";
@@ -17,7 +17,7 @@ const createUserService = async ({
   });
 
   if (findUser) {
-    throw new Error("User already exists");
+    throw new AppError(409, "Email already exists");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
