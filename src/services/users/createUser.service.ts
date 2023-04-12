@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { AppError } from "../../errors/appErrors";
 import AppDataSource from "../../data-source";
-import { IUserRequest } from "../../interfaces/users";
+import { IUserRequest, IUser } from "../../interfaces/users";
 import { User } from "../../entities/user.entity";
 
 const createUserService = async ({
@@ -9,7 +9,7 @@ const createUserService = async ({
   email,
   nome,
   password,
-}: IUserRequest): Promise<User> => {
+}: IUserRequest): Promise<IUser> => {
   const userRepository = AppDataSource.getRepository(User);
 
   const findUser = await userRepository.findOne({
@@ -31,8 +31,16 @@ const createUserService = async ({
   });
 
   const test = await userRepository.save(user);
-  console.log(test);
-  return user;
+
+  const returnUser: IUser = {
+    id: user.id,
+    nome: user.nome,
+    email: user.email,
+    adm: user.adm,
+    createdAt: user.createdAt,
+    updatedAt: user.updateAt,
+  };
+  return returnUser;
 };
 
 export default createUserService;

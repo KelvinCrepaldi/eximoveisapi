@@ -10,8 +10,6 @@ export interface IUser {
   nome: string;
   email: string;
   adm: boolean;
-  password: string;
-  ativo?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
