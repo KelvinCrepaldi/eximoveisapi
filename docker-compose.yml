@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  api:
+    container_name: api
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      - DB_HOST=db
+      - DB=fuinha_db
+      - DB_PASSWORD=pipoca
+      - DB_USER=fuinha
+      - SECRET_KEY=2a19f1f4ebb6b868957593739798b8ee
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+
+  db:
+    container_name: db
+    image: postgres:14
+    ports:
+      - 5431:5432
+    environment:
+      - POSTGRES_USER=fuinha
+      - POSTGRES_PASSWORD=pipoca
+      - POSTGRES_DB=fuinha_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fuinha -d fuinha_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    volumes:
+      - postgres_demo:/var/lib/postgresql/data
+
+volumes:
+  postgres_demo:
+    driver: local
