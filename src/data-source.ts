@@ -3,9 +3,11 @@ import "dotenv/config";
 import { User } from "./entities/user.entity";
 import { Address } from "./entities/address.entity";
 import { Property } from "./entities/property.entity";
+import { Category } from "./entities/category.entity";
 import { initial1680621615217 } from "./migrations/1680621615217-initial";
 import { createProperty1681320737542 } from "./migrations/1681320737542-createProperty";
 import { modifyPropertyColumOptions1681321299108 } from "./migrations/1681321299108-modifyPropertyColumOptions";
+import { createCategory1681356519078 } from "./migrations/1681356519078-createCategory";
 
 const AppDataSource = new DataSource({
   type: "postgres",
@@ -16,11 +18,12 @@ const AppDataSource = new DataSource({
   database: process.env.DB,
   logging: true,
   synchronize: false,
-  entities: [User, Address, Property],
+  entities: [User, Address, Property, Category],
   migrations: [
     initial1680621615217,
     createProperty1681320737542,
     modifyPropertyColumOptions1681321299108,
+    createCategory1681356519078,
   ],
 });
 
