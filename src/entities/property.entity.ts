@@ -11,6 +11,7 @@ import {
 
 import { Address } from "./address.entity";
 import { Category } from "./category.entity";
+
 @Entity("properties")
 export class Property {
   @PrimaryGeneratedColumn("uuid")
@@ -35,7 +36,6 @@ export class Property {
   @JoinColumn()
   address: Address;
 
-  @ManyToOne(() => Category, { eager: true })
-  @JoinColumn()
-  category: Category[];
+  @ManyToOne(() => Category, { nullable: true, eager: true })
+  category: Category;
 }
