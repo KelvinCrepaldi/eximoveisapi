@@ -9,6 +9,9 @@ import { createProperty1681320737542 } from "./migrations/1681320737542-createPr
 import { modifyPropertyColumOptions1681321299108 } from "./migrations/1681321299108-modifyPropertyColumOptions";
 import { createCategory1681356519078 } from "./migrations/1681356519078-createCategory";
 import { modifyCategoryTitle1681769377637 } from "./migrations/1681769377637-modifyCategoryTitle";
+import { Schedule } from "./entities/schedule.entity";
+import { createSchedule1681835449573 } from "./migrations/1681835449573-createSchedule";
+
 const AppDataSource = new DataSource({
   type: "postgres",
   host: process.env.DB_HOST,
@@ -18,13 +21,14 @@ const AppDataSource = new DataSource({
   database: process.env.DB,
   logging: true,
   synchronize: false,
-  entities: [User, Address, Property, Category],
+  entities: [User, Address, Property, Category, Schedule],
   migrations: [
     initial1680621615217,
     createProperty1681320737542,
     modifyPropertyColumOptions1681321299108,
     createCategory1681356519078,
     modifyCategoryTitle1681769377637,
+    createSchedule1681835449573,
   ],
 });
 

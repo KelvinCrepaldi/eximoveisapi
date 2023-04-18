@@ -3,7 +3,7 @@ import { AppError, handleError } from "../errors/appErrors";
 import { ICategoryRequest } from "../interfaces/categories";
 import createCategoryService from "../services/categories/createCategory.service";
 import listCategoryService from "../services/categories/listCategory.service";
-import listCategoryPropertiesService from "../services/properties/listCategoryProperties.service";
+import listCategoryPropertiesService from "../services/categories/listCategoryProperties.service";
 
 const createCategoryController = async (req: Request, res: Response) => {
   try {
