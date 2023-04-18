@@ -6,8 +6,13 @@ import listPropertyService from "../services/properties/listProperty.service";
 
 const createPropertyController = async (req: Request, res: Response) => {
   try {
-    const { address, tamanho, valor }: IPropertyRequest = req.body;
-    const property = await createPropertyService({ address, tamanho, valor });
+    const { address, tamanho, valor, categoryId }: IPropertyRequest = req.body;
+    const property = await createPropertyService({
+      address,
+      tamanho,
+      valor,
+      categoryId,
+    });
     return res.status(200).json(property);
   } catch (error) {
     if (error instanceof AppError) {

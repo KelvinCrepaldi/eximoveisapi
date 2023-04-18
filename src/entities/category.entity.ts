@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
 import { Property } from "./property.entity";
 
-@Entity("Categories")
+@Entity("categories")
 export class Category {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -11,5 +11,5 @@ export class Category {
   nome: string;
 
   @OneToMany(() => Property, (property) => property.category)
-  property: Property[];
+  properties: Property[];
 }
