@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { AppError, handleError } from "../errors/appErrors";
 import { IScheduleRequest } from "../interfaces/schedules";
 import createScheduleService from "../services/schedules/createSchedule.service";
+import listSchedulePropertiesService from "../services/schedules/listScheduleProperties.service";
 
 const createScheduleController = async (req: Request, res: Response) => {
   try {
@@ -22,4 +23,20 @@ const createScheduleController = async (req: Request, res: Response) => {
   }
 };
 
-export { createScheduleController };
+const listSchedulePropertiesController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const id = req.params.id;
+    const scheduleProperty = await listSchedulePropertiesService(id);
+
+    return res.json(scheduleProperty);
+  } catch (error) {
+    if (error instanceof AppError) {
+      handleError(error, res);
+    }
+  }
+};
+
+export { createScheduleController, listSchedulePropertiesController };

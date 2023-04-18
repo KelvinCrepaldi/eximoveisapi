@@ -10,7 +10,7 @@ export class Schedule {
   @Column({ type: "timestamp" })
   horario_visita: Date;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   user: User;
 
   @ManyToOne(() => Property)
