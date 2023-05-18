@@ -18,3 +18,19 @@ export interface IUserLogin {
   email: string;
   password: string;
 }
+
+export interface IUserUpdate {
+  nome?: string;
+  email?: string;
+  password?: string;
+}
+
+export interface IUserUpdateRequest {
+  nome?: string;
+  email?: string;
+}
+
+export interface IUserUpdatePassword {
+  password?: string;
+  newPassword: string;
+}
